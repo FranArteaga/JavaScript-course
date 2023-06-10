@@ -29,9 +29,9 @@ const storeOpenHourMessage = (day, hour) => {
 console.log(storeOpenHourMessage(dayOfWeek, currentHour))
 
 let dayExample = 0
-let hourExample = 7
+let hourExample = 9
 let message
 
 let openingHour = ([0, 6].includes(dayExample)) ? 9 : 11
-hourExample >= openingHour ? message = "open :)" : message = `closed, We open at ${openingHour}`
+message = (hourExample >= openingHour) ?  "open :)" : `closed, We open at ${openingHour}`
 console.log(message)
