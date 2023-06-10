@@ -35,3 +35,10 @@ let message
 let openingHour = ([0, 6].includes(dayExample)) ? 9 : 11
 message = (hourExample >= openingHour) ?  "open :)" : `closed, We open at ${openingHour}`
 console.log(message)
+
+const ternaryOpenMessage = (day) => {
+    let hourOfOpening = ([0,6].includes(day) ? 9 : 11)
+    let theMessage = ( currentHour >= hourOfOpening) ? "open :)" : `closed, We open at ${openingHour}`
+    return theMessage
+}
+console.log("functionWithTernary", ternaryOpenMessage(dayOfWeek))
