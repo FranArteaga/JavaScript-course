@@ -31,9 +31,23 @@ const giveCard = () => {
     // newCard.push(deck.shift())
     // console.log(newCard)
     const card = deck.pop()
-    console.log(deck)
-    console.log(card)
+    console.log("deck -given card", deck)
+    console.log("given card", card)
     return card
 
 }
 giveCard()
+
+const cardValue = (card) => {
+    const cardValue = card.substring(0, card.length -1)
+    let points
+    if ( isNaN( cardValue )) {
+        //idea: switch that assigns value to points depending on letter
+        
+    } else {
+        //we multiply a string * 1 to make it a number
+        points = cardValue * 1
+    }
+    console.log("points", points)
+}
+cardValue("6D")
