@@ -2,6 +2,9 @@ let deck = []
 let typesOfCard = ["C", "D", "H", "S"]
 let cardWithLetter = ["A", "J", "Q", "K"]
 
+// HTML references
+btnNewCard = document.querySelector("#btnNewCard")
+
 //creating deck adding elements from array and returning shuffled array called deck 
 const createDeck = () => {
     //iterating with card values 2-10, types (C,D,H,S) and adding them together to the deck array
@@ -35,10 +38,7 @@ const giveCard = () => {
 
     //pop method to return last card in array and show card in varriable card
     const card = deck.pop()
-    console.log("deck minus given card", deck)
-    console.log("given card", card)
     return card
-
 }
 giveCard()
 
@@ -52,5 +52,3 @@ const cardValue = (card) => {
         :
         cardValue * 1  //we multiply a string * 1 to make it a number
 }
-let finalCardValue = cardValue(giveCard())
-console.log( {finalCardValue} )
