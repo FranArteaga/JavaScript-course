@@ -72,5 +72,12 @@ btnNewCard.addEventListener('click', () => {
     cardImg.src = `./assets/cards/${card}.png`
     cardImg.classList.add('card')
     divPlayer1Cards.append(cardImg)
-
+    
+    if (pointsPlayer1 > 21) {
+        window.alert("Just lost bro lmao")
+        btnNewCard.disabled = true
+    } else if (pointsPlayer1 === 21){
+        window.alert("Got 21. Nice!")
+        btnNewCard.disabled = true
+    }
 })
