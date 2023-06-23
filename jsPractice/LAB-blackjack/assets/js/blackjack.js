@@ -2,8 +2,14 @@ let deck = []
 let typesOfCard = ["C", "D", "H", "S"]
 let cardWithLetter = ["A", "J", "Q", "K"]
 
+let pointsPlayer1 = 0
+let pointsComputer = 0
+
 // HTML references
 btnNewCard = document.querySelector("#btnNewCard")
+//with querySelectorAll we can specify what html tag we want with [0],[1] etc as shown in the btnNewCard.addEventListener
+htmlCounterPlayer1 = document.querySelectorAll("small") 
+
 
 //creating deck adding elements from array and returning shuffled array called deck 
 const createDeck = () => {
@@ -21,7 +27,6 @@ const createDeck = () => {
     }
     //using underscore library for the 'shuffle' method
     deck = _.shuffle(deck)
-    console.log("shuffled", deck)
     return deck
 }
 createDeck()
@@ -52,3 +57,12 @@ const cardValue = (card) => {
         :
         cardValue * 1  //we multiply a string * 1 to make it a number
 }
+
+//Events
+//CALLBACK function that calls another function as an argument
+btnNewCard.addEventListener('click', () => {
+    const card = giveCard()
+    console.log(card)
+    pointsPlayer1 += cardValue(card)
+    htmlCounterPlayer1[0].innerText = pointsPlayer1
+})
