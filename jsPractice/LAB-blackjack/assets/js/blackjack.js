@@ -45,16 +45,12 @@ giveCard()
 //defining value of returned card
 const cardValue = (card) => {
     //we apply a substring to remove the last character from the card (e.g. 10A) and use the value as points
-    const cardValue = card.substring(0, card.length -1)
-    let points
-    //inNaN returns true or false depending if the given value is a number
-    if ( isNaN( cardValue )) {
-        //idea: switch that assigns value to points depending on letter
-        
-    } else {
-        //we multiply a string * 1 to make it a number
-        points = cardValue * 1
-    }
-    console.log("points", points)
+    const cardValue = card.substring(0, card.length - 1)
+    return isNaN(cardValue) //inNaN returns true or false depending if the given value is a number
+        ?
+        (cardValue === "A") ? 11 : 10
+        :
+        cardValue * 1  //we multiply a string * 1 to make it a number
 }
-cardValue(giveCard())
+let finalCardValue = cardValue(giveCard())
+console.log( {finalCardValue} )
