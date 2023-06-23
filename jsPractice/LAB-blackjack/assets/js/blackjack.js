@@ -6,9 +6,10 @@ let pointsPlayer1 = 0
 let pointsComputer = 0
 
 // HTML references
-btnNewCard = document.querySelector("#btnNewCard")
+const btnNewCard = document.querySelector("#btnNewCard")
+const divPlayer1Cards = document.querySelector("#player1-cards")
 //with querySelectorAll we can specify what html tag we want with [0],[1] etc as shown in the btnNewCard.addEventListener
-htmlCounterPlayer1 = document.querySelectorAll("small") 
+const htmlCounterPlayer1 = document.querySelectorAll("small")
 
 
 //creating deck adding elements from array and returning shuffled array called deck 
@@ -65,4 +66,11 @@ btnNewCard.addEventListener('click', () => {
     console.log(card)
     pointsPlayer1 += cardValue(card)
     htmlCounterPlayer1[0].innerText = pointsPlayer1
+
+    // <img class="card" src="./assets/cards/2C.png">
+    const cardImg = document.createElement('img')
+    cardImg.src = `./assets/cards/${card}.png`
+    cardImg.classList.add('card')
+    divPlayer1Cards.append(cardImg)
+
 })

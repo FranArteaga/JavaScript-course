@@ -19,6 +19,6 @@ html, body{
 }
 
 
-#player-cards, #house-cards{
+#player1-cards, #house-cards{
     height: 10rem;
 }
