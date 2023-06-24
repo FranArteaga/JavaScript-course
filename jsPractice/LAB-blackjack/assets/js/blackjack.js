@@ -7,7 +7,9 @@ let pointsComputer = 0
 
 // HTML references
 const btnNewCard = document.querySelector("#btnNewCard")
+const btnStop = document.querySelector("#btnStop")
 const divPlayer1Cards = document.querySelector("#player1-cards")
+const divComputerCards = document.querySelector("#house-cards")
 //with querySelectorAll we can specify what html tag we want with [0],[1] etc as shown in the btnNewCard.addEventListener
 const htmlCounterPlayer1 = document.querySelectorAll("small")
 
@@ -46,9 +48,8 @@ const giveCard = () => {
     const card = deck.pop()
     return card
 }
-giveCard()
 
-//defining value of returned card
+//defining value of returned card for player1
 const cardValue = (card) => {
     //we apply a substring to remove the last character from the card (e.g. 10A) and use the value as points
     const cardValue = card.substring(0, card.length - 1)
@@ -59,11 +60,32 @@ const cardValue = (card) => {
         cardValue * 1  //we multiply a string * 1 to make it a number
 }
 
+//dealer/computer turn. getting cards to surpass player1 points and stopping when player lost(+21 points)
+const computerTurn = (minimumPoints) => {
+    do {
+        const card = giveCard()
+        pointsComputer += cardValue(card)
+        htmlCounterPlayer1[1].innerText = pointsComputer
+
+        // <img class="card" src="./assets/cards/2C.png">
+        const cardImg = document.createElement('img')
+        cardImg.src = `./assets/cards/${card}.png`
+        cardImg.classList.add('card')
+        divComputerCards.append(cardImg)
+
+        if (minimumPoints > 21) {
+            break
+        }
+
+    } while ((pointsComputer < minimumPoints) && (minimumPoints <= 21))
+}
+
 //Events
-//CALLBACK function that calls another function as an argument
+//CALLBACK: function that calls another function as an argument
+
 btnNewCard.addEventListener('click', () => {
     const card = giveCard()
-    console.log(card)
+    // console.log(card)
     pointsPlayer1 += cardValue(card)
     htmlCounterPlayer1[0].innerText = pointsPlayer1
 
@@ -72,12 +94,30 @@ btnNewCard.addEventListener('click', () => {
     cardImg.src = `./assets/cards/${card}.png`
     cardImg.classList.add('card')
     divPlayer1Cards.append(cardImg)
-    
+
+    //player must not get more cards after surpassing 21
     if (pointsPlayer1 > 21) {
-        window.alert("Just lost bro lmao")
+        console.warn("Just lost bro lmao")
         btnNewCard.disabled = true
-    } else if (pointsPlayer1 === 21){
-        window.alert("Got 21. Nice!")
+        btnStop.disabled = true
+        computerTurn(pointsPlayer1)
+    } else if (pointsPlayer1 === 21) {
+        console.warn("Got 21. Nice!")
+        btnStop.disabled = true
         btnNewCard.disabled = true
+        computerTurn(pointsPlayer1)
+    }
+})
+
+//eventListener for stop button. disabling buttons and ending the game with conditions for result message
+btnStop.addEventListener('click', () => {
+    btnNewCard.disabled = true
+    btnStop.disabled = true
+    computerTurn(pointsPlayer1)
+    if ((pointsPlayer1 > pointsComputer) && (pointsPlayer1 <= 21) ||
+        (pointsPlayer1 <= 21 && pointsComputer > 21)) {
+        console.warn("U WON DOG LESGOOO")
+    } else {
+        console.warn("u lost dog :(((")
     }
 })
