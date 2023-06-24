@@ -77,7 +77,22 @@ const computerTurn = (minimumPoints) => {
             break
         }
 
+        //house se detiene al igualar al player aunque los puntos sean bajos (e.g. player paró en 10pts y house se quedó con 1 card en 10pts para empatar aunque pudo tomar otra carta sin tener problemas de puntos)
     } while ((pointsComputer < minimumPoints) && (minimumPoints <= 21))
+
+    setTimeout(() => {
+        if (pointsComputer === minimumPoints) {
+            alert("TIE! No winner.")
+        }
+        else if ((minimumPoints > pointsComputer) && (minimumPoints <= 21) ||
+            (minimumPoints <= 21 && pointsComputer > 21)) {
+            alert("U WON DOG LESGOOO")
+        } else if ((minimumPoints > 21) || (pointsComputer > minimumPoints) && (pointsComputer <= 21)) {
+            alert("u lost dog :(((")
+        } else {
+            console.warn("unpredicted situation")
+        }
+    }, 60)
 }
 
 //Events
@@ -97,12 +112,11 @@ btnNewCard.addEventListener('click', () => {
 
     //player must not get more cards after surpassing 21
     if (pointsPlayer1 > 21) {
-        console.warn("Just lost bro lmao")
         btnNewCard.disabled = true
         btnStop.disabled = true
         computerTurn(pointsPlayer1)
     } else if (pointsPlayer1 === 21) {
-        console.warn("Got 21. Nice!")
+        // console.warn("Got 21. Nice!")
         btnStop.disabled = true
         btnNewCard.disabled = true
         computerTurn(pointsPlayer1)
@@ -114,10 +128,4 @@ btnStop.addEventListener('click', () => {
     btnNewCard.disabled = true
     btnStop.disabled = true
     computerTurn(pointsPlayer1)
-    if ((pointsPlayer1 > pointsComputer) && (pointsPlayer1 <= 21) ||
-        (pointsPlayer1 <= 21 && pointsComputer > 21)) {
-        console.warn("U WON DOG LESGOOO")
-    } else {
-        console.warn("u lost dog :(((")
-    }
 })
