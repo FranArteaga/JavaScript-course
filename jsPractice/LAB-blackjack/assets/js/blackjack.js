@@ -8,10 +8,11 @@ let pointsComputer = 0
 // HTML references
 const btnNewCard = document.querySelector("#btnNewCard")
 const btnStop = document.querySelector("#btnStop")
-const divPlayer1Cards = document.querySelector("#player1-cards")
-const divComputerCards = document.querySelector("#house-cards")
+const btnNewGame = document.querySelector("#btnNewGame")
+let divPlayer1Cards = document.querySelector("#player1-cards")
+let divComputerCards = document.querySelector("#house-cards")
 //with querySelectorAll we can specify what html tag we want with [0],[1] etc as shown in the btnNewCard.addEventListener
-const htmlCounterPlayer1 = document.querySelectorAll("small")
+const htmlCounter = document.querySelectorAll("small")
 
 
 //creating deck adding elements from array and returning shuffled array called deck 
@@ -65,7 +66,7 @@ const computerTurn = (minimumPoints) => {
     do {
         const card = giveCard()
         pointsComputer += cardValue(card)
-        htmlCounterPlayer1[1].innerText = pointsComputer
+        htmlCounter[1].innerText = pointsComputer
 
         // <img class="card" src="./assets/cards/2C.png">
         const cardImg = document.createElement('img')
@@ -102,7 +103,7 @@ btnNewCard.addEventListener('click', () => {
     const card = giveCard()
     // console.log(card)
     pointsPlayer1 += cardValue(card)
-    htmlCounterPlayer1[0].innerText = pointsPlayer1
+    htmlCounter[0].innerText = pointsPlayer1
 
     // <img class="card" src="./assets/cards/2C.png">
     const cardImg = document.createElement('img')
@@ -128,4 +129,22 @@ btnStop.addEventListener('click', () => {
     btnNewCard.disabled = true
     btnStop.disabled = true
     computerTurn(pointsPlayer1)
+})
+
+// reset game
+btnNewGame.addEventListener("click", () => {
+    deck = []
+    deck = createDeck()
+    pointsPlayer1 = 0
+    pointsComputer = 0
+
+    htmlCounter[0].innerHTML = 0
+    htmlCounter[1].innerHTML = 0
+
+
+    divPlayer1Cards.innerHTML = ''
+    divComputerCards.innerHTML = ''
+
+    btnNewCard.disabled = false
+    btnStop.disabled = false
 })
