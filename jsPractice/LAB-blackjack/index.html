@@ -18,15 +18,15 @@
     <div class="row mt-3">
         <div id="buttonsDiv" class="col text-center">
             <button id="btnNewGame" class="btn btn-danger">New Game</button>
-            <button id="btnNewCard" class="btn btn-primary">New Card</button>
-            <button id="btnStop" class="btn btn-primary">Stop</button>
+            <button id="btnNewCard" disabled="disabled" class="btn btn-primary">New Card</button>
+            <button id="btnStop" disabled="disabled" class="btn btn-primary">Stop</button>
         </div>
     </div>
 
     <div class="row container">
         <div class="col">
             <h3> Player 1 - <small>0</small></h3>
-            <div id="player1-cards" class="row">
+            <div id="player1-cards" class="divCards row">
                 <!-- <img class="card" src="./assets/cards/2C.png" alt="card"> -->
             </div>
         </div>
@@ -35,13 +35,16 @@
     <div class="row container mt-2">
         <div class="col">
             <h3> House - <small>0</small></h3>
-            <div id="house-cards" class="row">
+            <div id="house-cards" class="divCards row">
                 <!-- <img class="card" src="./assets/cards/2C.png" alt="card"> -->
             </div>
         </div>
     </div>
     <script src="./assets//js/undescore-min.js"></script>
     <script src="./assets/js/blackjack.js"></script>
+    <script>
+        myModule.newGame()
+    </script>
 </body>
 
 </html>
