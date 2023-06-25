@@ -1,4 +1,4 @@
-(() => {
+const myModule = (() => {
     'use strict'
 
     let deck = []
@@ -19,9 +19,17 @@
     //with this function we initialize the game //last player must always be the computer
     const initializeGame = (numPlayers = 2) => {
         deck = createDeck()
+
+        playersPoints = []
         for (let i = 0; i < numPlayers; i++) {
             playersPoints.push(0)
         }
+
+        htmlCounter.forEach(e => e.innerText = 0)
+        divPlayerCards.forEach (e => e.innerHTML = '')
+
+        btnNewCard.disabled = false
+        btnStop.disabled = false
     }
 
     //creating deck adding elements from array and returning shuffled array called deck
@@ -42,8 +50,6 @@
         //using underscore library for the 'shuffle' method
         return _.shuffle(deck)
     }
-
-
 
     // let newCard = []
     //returning card
@@ -66,7 +72,7 @@
             ?
             (cardValue === "A") ? 11 : 10
             :
-            cardValue * 1  //we multiply a string * 1 to make it a number
+            cardValue * 1  //we multiply a string * 1 to make a string a number
     }
 
     //Turn: 0 = first player and last one is the computer
@@ -85,21 +91,8 @@
         divPlayerCards[turn].append(cardImg)
     }
 
-    //dealer/computer turn. getting cards to surpass player1 points and stopping when player lost(+21 points)
-    const computerTurn = (minimumPoints) => {
-        let pointsComputer = 0
-        do {
-            const card = giveCard()
-            pointsComputer = acumulatePoints(card, playersPoints.length - 1)
-
-            createCard(card, playersPoints.length - 1)
-
-            if (minimumPoints > 21) {
-                break
-            }
-
-            //house se detiene al igualar al player aunque los puntos sean bajos (e.g. player paró en 10pts y house se quedó con 1 card en 10pts para empatar aunque pudo tomar otra carta sin tener problemas de puntos)
-        } while ((pointsComputer < minimumPoints) && (minimumPoints <= 21))
+    const determineWinner = () => {
+        const [ minimumPoints, pointsComputer] = playersPoints
 
         setTimeout(() => {
             if (pointsComputer === minimumPoints) {
@@ -113,18 +106,28 @@
             } else {
                 console.warn("unpredicted situation")
             }
-        }, 60)
+        }, 80)
     }
 
+    //dealer/computer turn. getting cards to surpass player1 points and stopping when player lost(+21 points)
+    const computerTurn = (minimumPoints) => {
+        let pointsComputer = 0
+        do {
+            const card = giveCard()
+            pointsComputer = acumulatePoints(card, playersPoints.length - 1)
+            createCard(card, playersPoints.length - 1)
 
+            //error - house se detiene al igualar al player aunque los puntos sean bajos (e.g. player paró en 10pts y house se quedó con 1 card en 10pts para empatar aunque pudo tomar otra carta sin tener problemas de puntos)
+        } while ((pointsComputer < minimumPoints) && (minimumPoints <= 21))
+
+        determineWinner()
+    }
 
     //Events
     //CALLBACK: function that calls another function as an argument
-
     btnNewCard.addEventListener('click', () => {
         const card = giveCard()
         const pointsPlayer = acumulatePoints(card, 0)
-        console.log("aki", pointsPlayer)
         createCard(card, 0)
 
         //player must not get more cards after surpassing 21
@@ -145,29 +148,16 @@
         btnNewCard.disabled = true
         btnStop.disabled = true
 
-        computerTurn(pointsPlayer)
+        computerTurn(playersPoints[0])
     })
 
     // reset game
     btnNewGame.addEventListener("click", () => {
         initializeGame()
-
-
-        // // deck = []
-        // // deck = createDeck()
-
-        // // pointsPlayer = 0
-        // // pointsComputer = 0
-
-        // htmlCounter[0].innerHTML = 0
-        // htmlCounter[1].innerHTML = 0
-
-
-        // divPlayer1Cards.innerHTML = ''
-        // divComputerCards.innerHTML = ''
-
-        // btnNewCard.disabled = false
-        // btnStop.disabled = false
     })
+
+    return {
+        newGame: initializeGame
+    }
 
 })();
